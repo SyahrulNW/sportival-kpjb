@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPJB SPORTIVAL</title>
+    <style>
+        /* Reset dan styling untuk fullscreen iframe */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0A1A3F;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        /* Loading spinner */
+        .loading-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0A1A3F;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 16px;
+            font-family: 'Inter', sans-serif;
+            color: #8B96A0;
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(204, 255, 0, 0.1);
+            border-top-color: #CCFF00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { font-size: 14px; letter-spacing: 0.05em; }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-container" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">⏳ Memuat KPJB SPORTIVAL...</div>
+    </div>
+
+    <!-- IFrame Aplikasi -->
+    <!-- ⚠️ GANTI URL_APPS_SCRIPT_ANDA dengan URL Apps Script Anda -->
+    <iframe
+        id="appFrame"
+        src="https://script.google.com/macros/s/AKfycbxjIJRhQSFDA1URnKD0SN82xJ0MAzQ9HiblvaABNUxhEJOwSJojL2gaUAbBEwtmCU-8/exec"
+        allow="geolocation; microphone; camera; autoplay; encrypted-media"
+        loading="lazy"
+        onload="document.getElementById('loadingScreen').style.display='none'"
+        onerror="document.getElementById('loadingScreen').innerHTML='<div style=text-align:center;padding:40px;><div style=font-size:48px;margin-bottom:16px;>⚠️</div><div style=font-size:16px;color:#FF6B6B;>Gagal memuat aplikasi.<br>Silakan refresh halaman atau coba lagi nanti.</div></div>'"
+    ></iframe>
+
+    <script>
+        // Fallback: jika iframe tidak selesai loading dalam 10 detik, sembunyikan loading
+        setTimeout(function() {
+            const loading = document.getElementById('loadingScreen');
+            if (loading) {
+                loading.style.opacity = '0';
+                setTimeout(function() { loading.style.display = 'none'; }, 500);
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
